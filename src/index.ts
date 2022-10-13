@@ -54,10 +54,17 @@ const main = async () => {
 
         if (user) {
           user.name = profile.displayName;
+          if (profile.photos && profile.photos.length > 0) {
+            user.avatarUrl = profile.photos[0].value;
+          }
           await user.save();
         } else {
           user = await User.create({
             name: profile.displayName,
+            avatarUrl:
+              profile.photos && profile.photos.length > 0
+                ? profile.photos[0].value
+                : '',
             githubId: profile.id,
           }).save();
         }

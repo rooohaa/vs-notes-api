@@ -15,4 +15,9 @@ export class User extends BaseEntity {
     unique: true,
   })
   githubId: string;
+
+  @Column({
+    nullable: true,
+  })
+  avatarUrl: string;
 }
