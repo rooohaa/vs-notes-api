@@ -7,6 +7,7 @@ import { User } from './entities/User';
 import { Strategy as GitHubStrategy } from 'passport-github';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
+import cors from 'cors';
 
 const main = async () => {
   const app = express();
@@ -38,6 +39,7 @@ const main = async () => {
     done(null, user.accessToken);
   });
 
+  app.use(cors({ origin: '*' }));
   app.use(passport.initialize());
 
   passport.use(
