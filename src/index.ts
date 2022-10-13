@@ -90,6 +90,41 @@ const main = async () => {
     res.send('hello !');
   });
 
+  app.get('/me', async (req, res) => {
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader) {
+      res.send({ user: null });
+      return;
+    }
+
+    const token = authHeader.split(' ')[1];
+
+    if (!token) {
+      res.send({ user: null });
+      return;
+    }
+
+    let userId = '';
+
+    try {
+      const payload: any = jwt.verify(token, process.env.APP_SECRET_KEY);
+      userId = payload.userId;
+    } catch (err) {
+      res.send({ user: null });
+      return;
+    }
+
+    if (!userId) {
+      res.send({ user: null });
+      return;
+    }
+
+    const user = await User.findOneBy({ id: +userId });
+
+    res.send({ user });
+  });
+
   app.listen(3002, () => {
     console.log('listening on localhost:3002');
   });
