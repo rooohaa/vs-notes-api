@@ -26,11 +26,6 @@ const main = async () => {
   try {
     await AppDataSource.initialize();
     console.log('Database connection initialized');
-
-    // const userRepository = AppDataSource.getRepository(User);
-    // const users = await userRepository.find();
-
-    // console.log(users);
   } catch (err) {
     console.log('Database connection error. ', err);
   }
@@ -94,10 +89,6 @@ const main = async () => {
       res.redirect(`http://localhost:54321/auth/${req.user.accessToken}`);
     }
   );
-
-  app.get('/', (_req, res) => {
-    res.send('hello !');
-  });
 
   app.get('/me', async (req, res) => {
     const authHeader = req.headers.authorization;
